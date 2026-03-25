@@ -1,4 +1,5 @@
 import os
+import time
 from trading_app.order_service import send_order
 from trading_app.config        import RabbitConfig
 
@@ -38,14 +39,27 @@ def main():
 
 def vender(side):
 
-    print("\n" + "=" * 40)
-    print(f"  {side} ORDER — {STOCK}")
-    print(f"  Quantity : {QUANTITY} shares")
-    print("=" * 40)
+    while True:
+        
+        try:
 
-    username = input("Username             : ")
-    
-    price    = float(input("Price per share ($)  : "))
+            print("\n" + "=" * 40)
+            print(f"  {side} ORDER — {STOCK}")
+            print(f"  Quantity : {QUANTITY} shares")
+            print("=" * 40)
+
+            username = input("Username             : ")
+            if not username.strip() or username.isdigit():
+                os.system('cls')
+                print("Username cannot be empty or just spaces.")
+                continue
+            
+            price    = float(input("Price per share ($)  : "))
+            break
+
+        except ValueError:
+            os.system('cls')
+            print("[Error] Please enter a valid number")
 
     config = RabbitConfig()
     msg = send_order(username, side , QUANTITY, price, config)

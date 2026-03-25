@@ -1,5 +1,6 @@
 from trading_app.orders_class import Order
 from trading_app.trade_class  import Trade
+from itertools import zip_longest
 
 class OrderBook:
 
@@ -33,6 +34,22 @@ class OrderBook:
 
     def display(self):
         print("\n--- ORDER BOOK ---")
-        print(f"  BUYS  ({len(self.buys)})  : {[f'${o.price} by {o.username}' for o in self.buys]}") (f"  SELLS ({len(self.sells)}) : {[f'${o.price} by {o.username}' for o in self.sells]}")
-        
-        print("------------------\n")
+        print ("BUYS".ljust(40) + "| SELLS") 
+        print("ID".ljust(10)+ "| NOME".ljust(15)+"| PRICE".ljust(15)+ "| ID".ljust(10)+ "| NOME".ljust(15)+ "| PRICE".ljust(15))
+
+
+        for buy_side , sell_side in zip_longest (self.buys, self.sells):
+
+            buy_str = ''
+            sell_str = ''
+
+            if buy_side:
+                buy_str = f"{buy_side.order_id[0]}".ljust(10) + f"| {buy_side.username}".ljust(15)+ f"| ${buy_side.price:.2f}".ljust(15)
+
+            if sell_side:
+                sell_str = f"| {sell_side.order_id[0]}".ljust(10)+ f"| {sell_side.username}".ljust(15)+ f"| ${sell_side.price:.2f}".ljust(15)
+
+        print (f"{buy_str}".ljust(40) + f"{sell_str}".ljust(20))
+        print("-" * (40 * 2 + 3))
+        print(f"Total Buys: {len(self.buys)} | Total Sells: {len(self.sells)}")
+        print("-" * (40 * 2 + 3))

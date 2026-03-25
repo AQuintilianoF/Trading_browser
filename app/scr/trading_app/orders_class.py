@@ -1,11 +1,13 @@
 from datetime import datetime
-import uuid
+import random
 
 class Order:
 
     def __init__(self, username: str, side: str, quantity: int, price: float):
 
-        self.order_id  = str(uuid.uuid4())
+        list_id = list(range(1, 1000000))
+
+        self.order_id  = random.sample(list_id, 1)
         self.username  = username
         self.side      = side.upper()
         self.quantity  = quantity

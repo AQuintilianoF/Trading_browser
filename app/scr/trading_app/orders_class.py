@@ -5,9 +5,8 @@ class Order:
 
     def __init__(self, username: str, side: str, quantity: int, price: float):
 
-        list_id = list(range(1, 1000000))
 
-        self.order_id  = random.sample(list_id, 1)
+        self.order_id  = f"{random.randint(11, 9999)}"
         self.username  = username
         self.side      = side.upper()
         self.quantity  = quantity

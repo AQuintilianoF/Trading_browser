@@ -41,7 +41,7 @@ def main():
         trade = book.match(order)
 
         if trade:
-            print(f"[Match!]   Trade executed at ${trade.price:.2f} — {trade.buyer} bought from {trade.seller}")
+            print(f"\n\n[Match!]   Trade executed at ${trade.price:.2f} — {trade.buyer} bought from {trade.seller}")
             ch.basic_publish(
                 exchange    = "trades",
                 routing_key = "",
